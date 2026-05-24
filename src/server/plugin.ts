@@ -12,8 +12,8 @@ import {
 import { resolvePaths } from "../shared/constants.ts";
 import type { PasskeyConfig } from "./types.ts";
 
-function json(data: unknown, status = 200, headers?: Headers): Response {
-  return Response.json(data, headers ? { status, headers } : { status });
+function json(data: unknown, status = 200): Response {
+  return Response.json(data, { status });
 }
 
 function message(error: unknown): string {

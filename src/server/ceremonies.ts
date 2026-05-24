@@ -27,7 +27,11 @@ function parseTransports(
   raw: string | null,
 ): AuthenticatorTransport[] | undefined {
   if (!raw) return undefined;
-  return JSON.parse(raw) as AuthenticatorTransport[];
+  try {
+    return JSON.parse(raw) as AuthenticatorTransport[];
+  } catch {
+    return undefined;
+  }
 }
 
 export async function beginRegistration(

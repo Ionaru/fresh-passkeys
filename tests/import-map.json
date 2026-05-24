@@ -1,0 +1,12 @@
+{
+  "imports": {
+    "@simplewebauthn/browser": "./mocks/simplewebauthn_browser.ts",
+    "@simplewebauthn/server": "./mocks/simplewebauthn_server.ts",
+    "@std/assert": "jsr:@std/assert@^1.0.19",
+    "@std/encoding": "jsr:@std/encoding@^1.0.10",
+    "@std/encoding/base64url": "jsr:@std/encoding@^1.0.10/base64url",
+    "@std/testing": "jsr:@std/testing@^1.0.18",
+    "@std/testing/mock": "jsr:@std/testing@^1.0.18/mock",
+    "fresh": "jsr:@fresh/core@^2.3.3"
+  }
+}

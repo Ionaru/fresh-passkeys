@@ -53,8 +53,8 @@ only through these hooks. Storage (Drizzle, in-memory, Redis, …) is supplied v
 the `PasskeyStore` interface.
 
 Endpoints are mounted under `basePath` (default `/api/auth`): `register`,
-`add-passkey`, `authenticate` (each GET to begin, POST to finish). Each
-segment can be overridden individually via `paths`, e.g.
+`add-passkey`, `authenticate` (each GET to begin, POST to finish). Each segment
+can be overridden individually via `paths`, e.g.
 `{ paths: { register: "/signup" } }`. Pass the same `paths` to the client so its
 requests match.
 

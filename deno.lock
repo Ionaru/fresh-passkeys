@@ -5,6 +5,7 @@
     "jsr:@fresh/core@^2.3.3": "2.3.3",
     "jsr:@simplewebauthn/browser@^13.3.0": "13.3.0",
     "jsr:@simplewebauthn/server@^13.3.0": "13.3.0",
+    "jsr:@std/assert@^1.0.19": "1.0.19",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
     "jsr:@std/fmt@^1.0.8": "1.0.10",
     "jsr:@std/fs@^1.0.19": "1.0.23",
@@ -14,6 +15,7 @@
     "jsr:@std/net@^1.0.6": "1.0.6",
     "jsr:@std/path@^1.1.2": "1.1.4",
     "jsr:@std/path@^1.1.4": "1.1.4",
+    "jsr:@std/testing@^1.0.18": "1.0.18",
     "npm:@hexagon/base64@^1.1.27": "1.1.28",
     "npm:@levischuck/tiny-cbor@~0.2.2": "0.2.11",
     "npm:@opentelemetry/api@^1.9.0": "1.9.1",
@@ -66,6 +68,12 @@
         "npm:@peculiar/x509"
       ]
     },
+    "@std/assert@1.0.19": {
+      "integrity": "eaada96ee120cb980bc47e040f82814d786fe8162ecc53c91d8df60b8755991e",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
     "@std/encoding@1.0.10": {
       "integrity": "8783c6384a2d13abd5e9e87a7ae0520a30e9f56aeeaa3bdf910a3eaaf5c811a1"
     },
@@ -94,6 +102,12 @@
       "integrity": "1d2d43f39efb1b42f0b1882a25486647cb851481862dc7313390b2bb044314b5",
       "dependencies": [
         "jsr:@std/internal"
+      ]
+    },
+    "@std/testing@1.0.18": {
+      "integrity": "d3152f57b11666bf6358d0e127c7e3488e91178b0c2d8fbf0793e1c53cd13cb1",
+      "dependencies": [
+        "jsr:@std/assert"
       ]
     }
   },
@@ -290,7 +304,9 @@
       "jsr:@fresh/core@^2.3.3",
       "jsr:@simplewebauthn/browser@^13.3.0",
       "jsr:@simplewebauthn/server@^13.3.0",
-      "jsr:@std/encoding@^1.0.10"
+      "jsr:@std/assert@^1.0.19",
+      "jsr:@std/encoding@^1.0.10",
+      "jsr:@std/testing@^1.0.18"
     ]
   }
 }
