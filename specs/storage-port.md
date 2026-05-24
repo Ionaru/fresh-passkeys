@@ -14,7 +14,7 @@ inexpensive.
 
 ## Capabilities
 
-### Persist a challenge
+### Save a challenge
 
 Stores a challenge record under a challenge identifier. Called during every
 begin phase. The record carries the challenge value, its expiry, and any
@@ -40,16 +40,16 @@ Returns every credential belonging to a given user. Used during the add-passkey
 begin phase to build the exclude list that prevents enrolling a duplicate
 credential.
 
-### Save a passkey
+### Create a passkey
 
 Persists a newly verified credential. Called when an additional passkey is
 verified; the registration path persists through the host's registration hook
 instead, but supplies the same credential shape.
 
-### Bump a counter
+### Set a counter
 
-Advances the stored signature counter for a credential to a new value. Called
-after every successful login to keep replay protection current. See the replay
+Sets the stored signature counter for a credential to a new value. Called after
+every successful login to keep replay protection current. See the replay
 protection section of [Ceremonies](./ceremonies.md).
 
 ### Has any passkeys
@@ -58,7 +58,7 @@ Reports whether at least one credential exists anywhere in the system. Used at
 the start of the authentication ceremony so the host can distinguish a "nothing
 is registered yet" state from a genuine failure.
 
-### Get username
+### Find username
 
 Returns the stored username for a user identifier, or nothing if the user is not
 found. Used during the add-passkey begin phase to populate the credential's

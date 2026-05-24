@@ -52,7 +52,7 @@ export async function beginRegistration(
   });
 
   const challengeId = crypto.randomUUID();
-  await ceremonyOptions.store.putChallenge(challengeId, {
+  await ceremonyOptions.store.saveChallenge(challengeId, {
     challenge: options.challenge,
     expiresAt: Date.now() + CHALLENGE_TTL_MS,
     pendingUserId,
@@ -102,7 +102,7 @@ export async function beginAddPasskey(
   ceremonyOptions: CeremonyOptions,
   userId: string,
 ): Promise<{ challengeId: string; options: unknown }> {
-  const username = await ceremonyOptions.store.getUsername(userId);
+  const username = await ceremonyOptions.store.findUsername(userId);
   if (!username) throw new Error("User not found");
 
   const existing = await ceremonyOptions.store.listPasskeys(userId);
@@ -125,7 +125,7 @@ export async function beginAddPasskey(
   });
 
   const challengeId = crypto.randomUUID();
-  await ceremonyOptions.store.putChallenge(challengeId, {
+  await ceremonyOptions.store.saveChallenge(challengeId, {
     challenge: options.challenge,
     expiresAt: Date.now() + CHALLENGE_TTL_MS,
     addPasskeyUserId: userId,
@@ -163,7 +163,7 @@ export async function verifyAddPasskey(
 
   const verifiedCredential = verification.registrationInfo.credential;
   const credentialId = toBase64Url(verifiedCredential.id);
-  await ceremonyOptions.store.savePasskey({
+  await ceremonyOptions.store.createPasskey({
     userId: expectedUserId,
     credentialId,
     publicKey: toBase64Url(verifiedCredential.publicKey),
@@ -188,7 +188,7 @@ export async function beginAuthentication(
   });
 
   const challengeId = crypto.randomUUID();
-  await ceremonyOptions.store.putChallenge(challengeId, {
+  await ceremonyOptions.store.saveChallenge(challengeId, {
     challenge: options.challenge,
     expiresAt: Date.now() + CHALLENGE_TTL_MS,
   });
@@ -226,7 +226,7 @@ export async function finishAuthentication(
 
   if (!verification.verified) throw new Error("Auth verification failed");
 
-  await ceremonyOptions.store.bumpCounter(
+  await ceremonyOptions.store.setCounter(
     stored.credentialId,
     verification.authenticationInfo.newCounter,
   );
