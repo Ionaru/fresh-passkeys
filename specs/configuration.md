@@ -40,12 +40,12 @@ function.
 
 ### Registered hook
 
-Called after a public registration is verified, receiving the verified
-registration result and the session state. The host owns everything that happens
-next: it creates the user account, persists the first credential, establishes a
-session, and returns the HTTP response that the plugin sends back to the
-browser. Until this hook runs, no account exists — registration is not complete
-until the host commits it here.
+Called after a registration is verified, receiving the verified registration
+result and the session state. The host owns everything that happens next: it
+creates the user account, persists the first credential, establishes a session,
+and returns the HTTP response that the plugin sends back to the browser. Until
+this hook runs, no account exists — registration is not complete until the host
+commits it here.
 
 The response body this hook returns must carry the new user's identifier under a
 `userId` field. The browser client reads that field back and returns it from its
@@ -80,10 +80,10 @@ multiple domains, where the request's own origin is not the one to enforce.
 
 ### Username validator
 
-A function that checks a username before public registration proceeds. It
-returns nothing when the username is acceptable, or a message describing why it
-is not. The message is surfaced to the caller as a client error. The validator
-runs in both phases of public registration.
+A function that checks a username before registration proceeds. It returns
+nothing when the username is acceptable, or a message describing why it is not.
+The message is surfaced to the caller as a client error. The validator runs in
+both phases of registration.
 
 ## Ownership implications
 

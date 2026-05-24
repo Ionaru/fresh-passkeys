@@ -3,11 +3,11 @@ import { type App, createDefine, type Middleware } from "fresh";
 import {
   beginAddPasskey,
   beginAuthentication,
-  beginPublicRegistration,
+  beginRegistration,
   type CeremonyOptions,
   finishAuthentication,
   verifyAddPasskey,
-  verifyPublicRegistration,
+  verifyRegistration,
 } from "./ceremonies.ts";
 import { DEFAULT_BASE_PATH } from "../shared/constants.ts";
 import type { PasskeyConfig } from "./types.ts";
@@ -59,19 +59,19 @@ export function passkeyAuth<State>(
     return request.headers.get("origin") ?? new URL(request.url).origin;
   };
 
-  const beginPublic: Middleware<State> = async (context) => {
+  const beginRegister: Middleware<State> = async (context) => {
     const username = context.url.searchParams.get("username") ?? "";
     if (!username.trim()) return json({ error: "Username is required" }, 400);
     const validationError = config.validateUsername?.(username);
     if (validationError) return json({ error: validationError }, 400);
     try {
-      return json(await beginPublicRegistration(ceremonyOptions, username));
+      return json(await beginRegistration(ceremonyOptions, username));
     } catch (error) {
       return json({ error: message(error) }, 500);
     }
   };
 
-  const finishPublic: Middleware<State> = async (context) => {
+  const finishRegister: Middleware<State> = async (context) => {
     const body = await readJson(context.req);
     if (!body) return json({ error: "Invalid JSON body" }, 400);
     if (
@@ -87,7 +87,7 @@ export function passkeyAuth<State>(
     const usernameError = config.validateUsername?.(username);
     if (usernameError) return json({ error: usernameError }, 400);
     try {
-      const verified = await verifyPublicRegistration(
+      const verified = await verifyRegistration(
         ceremonyOptions,
         String(body.challengeId),
         body.credential,
@@ -168,8 +168,8 @@ export function passkeyAuth<State>(
     }
   };
 
-  app.get(`${base}/register-public`, define.middleware(beginPublic));
-  app.post(`${base}/register-public`, define.middleware(finishPublic));
+  app.get(`${base}/register`, define.middleware(beginRegister));
+  app.post(`${base}/register`, define.middleware(finishRegister));
   app.get(`${base}/register-add-passkey`, define.middleware(beginAdd));
   app.post(`${base}/register-add-passkey`, define.middleware(finishAdd));
   app.get(`${base}/authenticate`, define.middleware(beginAuth));

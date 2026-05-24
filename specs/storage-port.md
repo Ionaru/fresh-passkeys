@@ -43,8 +43,8 @@ credential.
 ### Save a passkey
 
 Persists a newly verified credential. Called when an additional passkey is
-verified; the public-registration path persists through the host's registration
-hook instead, but supplies the same credential shape.
+verified; the registration path persists through the host's registration hook
+instead, but supplies the same credential shape.
 
 ### Bump a counter
 
@@ -77,8 +77,8 @@ What the plugin asks the host to persist for an in-flight ceremony:
 - the challenge value issued for the ceremony;
 - an expiry timestamp, set five minutes after creation;
 - ceremony-specific identity fields: a provisional user identifier and username
-  for public registration, an authenticated user identifier for add passkey, and
-  none for authentication.
+  for registration, an authenticated user identifier for add passkey, and none
+  for authentication.
 
 ### Stored passkey
 
@@ -92,9 +92,8 @@ What the host persists for each enrolled credential:
 
 ### Verified registration result
 
-What the plugin hands to the host's registration hook after a public
-registration is verified, so the host can create the account and its first
-credential together:
+What the plugin hands to the host's registration hook after a registration is
+verified, so the host can create the account and its first credential together:
 
 - the provisional user identifier generated during the ceremony;
 - the validated username;

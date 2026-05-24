@@ -6,7 +6,7 @@
 export type ChallengeEntry = {
   challenge: string;
   expiresAt: number;
-  /** Public registration: provisional user id encoded into WebAuthn `user.id`. */
+  /** Registration: provisional user id encoded into WebAuthn `user.id`. */
   pendingUserId?: string;
   username?: string;
   /** Add-passkey ceremony: the already-authenticated user id. */
@@ -22,7 +22,7 @@ export type StoredPasskey = {
   transports: string | null;
 };
 
-/** Result of a verified public registration; the host persists this atomically. */
+/** Result of a verified registration; the host persists this atomically. */
 export type VerifiedRegistration = {
   pendingUserId: string;
   username: string;
@@ -73,7 +73,7 @@ export interface PasskeyConfig<State> {
   basePath?: string;
   /** Override expected WebAuthn origin; defaults to the request origin. */
   expectedOrigin?: (request: Request) => string;
-  /** Host-owned username policy; runs before public registration begins. */
+  /** Host-owned username policy; runs before registration begins. */
   validateUsername?: (username: string) => string | null;
   /** Identity hook: the current user id, or null when unauthenticated. */
   getSessionUserId: (state: State) => string | null;

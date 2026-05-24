@@ -11,9 +11,9 @@ exposes a pair: a GET that begins it and a POST that finishes it. Begin
 responses carry a challenge identifier and the options the browser needs; the
 matching finish request must echo that challenge identifier back.
 
-## Public registration
+## Registration
 
-### GET `/register-public`
+### GET `/register`
 
 Begins account creation. Takes the desired username as a query input. The
 username is required and, if a validator is configured, must pass it.
@@ -23,7 +23,7 @@ username is required and, if a validator is configured, must pass it.
 - **Bad request — 400.** Username missing or rejected by the validator.
 - **Server error — 500.** Unexpected failure while beginning.
 
-### POST `/register-public`
+### POST `/register`
 
 Finishes account creation. Takes the challenge identifier, the username, and the
 signed credential.

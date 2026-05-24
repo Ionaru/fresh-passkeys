@@ -30,7 +30,7 @@ function parseTransports(
   return JSON.parse(raw) as AuthenticatorTransport[];
 }
 
-export async function beginPublicRegistration(
+export async function beginRegistration(
   ceremonyOptions: CeremonyOptions,
   username: string,
 ): Promise<{ challengeId: string; options: unknown }> {
@@ -61,7 +61,7 @@ export async function beginPublicRegistration(
   return { challengeId, options };
 }
 
-export async function verifyPublicRegistration(
+export async function verifyRegistration(
   ceremonyOptions: CeremonyOptions,
   challengeId: string,
   credential: unknown,

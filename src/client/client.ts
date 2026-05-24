@@ -26,7 +26,7 @@ async function registerPasskey(
   username: string,
 ): Promise<{ userId: string }> {
   const begin = await fetch(
-    `${base}/register-public?username=${encodeURIComponent(username)}`,
+    `${base}/register?username=${encodeURIComponent(username)}`,
   );
   if (!begin.ok) {
     throw new Error(await errorMessage(begin, "Could not start registration"));
@@ -35,7 +35,7 @@ async function registerPasskey(
   const credential = await startRegistration({
     optionsJSON: options as PublicKeyCredentialCreationOptionsJSON,
   });
-  const finish = await fetch(`${base}/register-public`, {
+  const finish = await fetch(`${base}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "same-origin",

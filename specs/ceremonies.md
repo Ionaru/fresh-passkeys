@@ -14,10 +14,10 @@ Every ceremony runs in two phases against a paired set of endpoints:
   and consumes the stored challenge, verifies the result cryptographically, and
   either persists a credential or hands control to the host.
 
-There are three ceremonies: **public registration**, **add passkey**, and
+There are three ceremonies: **registration**, **add passkey**, and
 **authentication**.
 
-## Public registration
+## Registration
 
 This ceremony creates a brand-new account together with its first passkey. It is
 open — it does not require an existing session.
@@ -78,8 +78,8 @@ signed in. It is session-gated throughout.
 3. All credentials already registered to that user are read and placed on the
    exclude list, so the authenticator will not enroll a duplicate of a
    credential the user already has.
-4. Registration options are generated under the same policy as public
-   registration, but with the real user identifier.
+4. Registration options are generated under the same policy as registration, but
+   with the real user identifier.
 5. A challenge is persisted, tagged with the authenticated user identifier, and
    its identifier and options are returned.
 
@@ -141,7 +141,7 @@ user need not type a username.
   [Storage Port](./storage-port.md).
 - **Ceremony discrimination.** A stored challenge carries different identity
   fields depending on which ceremony created it: a provisional user identifier
-  and username for public registration, an authenticated user identifier for add
+  and username for registration, an authenticated user identifier for add
   passkey, and no identity fields for authentication. The finish phase checks
   for the fields its ceremony expects, which prevents a challenge minted for one
   ceremony from being consumed by another.

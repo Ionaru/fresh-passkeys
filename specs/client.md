@@ -29,8 +29,8 @@ session cookie travels with them.
 
 ### Register
 
-Begins public registration for a given username, prompts the browser to create a
-new passkey, and finishes by submitting the result. On success it yields the
+Begins registration for a given username, prompts the browser to create a new
+passkey, and finishes by submitting the result. On success it yields the
 identifier of the newly created user.
 
 ### Log in

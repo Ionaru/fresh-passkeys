@@ -52,7 +52,7 @@ The host owns identity, the user model and sessions; the plugin reaches them
 only through these hooks. Storage (Drizzle, in-memory, Redis, …) is supplied via
 the `PasskeyStore` interface.
 
-Endpoints are mounted under `basePath` (default `/api/auth`): `register-public`,
+Endpoints are mounted under `basePath` (default `/api/auth`): `register`,
 `register-add-passkey`, `authenticate` (each GET to begin, POST to finish).
 
 ## Client
