@@ -71,6 +71,14 @@ The prefix under which the ceremony endpoints are mounted. When omitted it
 defaults to `/api/auth`. See [HTTP API](./http-api.md) for the full set of
 paths.
 
+### Endpoint path overrides
+
+The segment for each ceremony — registration, add-passkey, and authentication —
+may be overridden individually. Any segment left unspecified keeps its default.
+Each override is appended to the base path, so they compose: changing both the
+base path and a single segment is allowed. The same overrides must be given to
+the browser client so its requests target the same paths the server mounts.
+
 ### Expected-origin override
 
 A function that, given the request, returns the origin that credential

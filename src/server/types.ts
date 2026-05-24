@@ -2,6 +2,8 @@
 // updates, and reaches the host app only through the `PasskeyStore` port and
 // the `onRegistered` / `onAuthenticated` hooks.
 
+import type { PasskeyEndpointConfig } from "../shared/constants.ts";
+
 /** Single-use challenge record kept between a ceremony's begin and finish. */
 export type ChallengeEntry = {
   challenge: string;
@@ -65,12 +67,10 @@ export interface PasskeyStore {
  * reached through the hooks below. The hooks receive the host's request state
  * (`context.state`) so the plugin never forces a context shape on the host.
  */
-export interface PasskeyConfig<State> {
+export interface PasskeyConfig<State> extends PasskeyEndpointConfig {
   rpId: string;
   rpName: string;
   store: PasskeyStore;
-  /** Endpoint prefix; defaults to `/api/auth`. */
-  basePath?: string;
   /** Override expected WebAuthn origin; defaults to the request origin. */
   expectedOrigin?: (request: Request) => string;
   /** Host-owned username policy; runs before registration begins. */

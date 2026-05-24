@@ -8,7 +8,7 @@ import {
   startRegistration,
 } from "@simplewebauthn/browser";
 
-import { DEFAULT_BASE_PATH } from "../shared/constants.ts";
+import { resolvePaths } from "../shared/constants.ts";
 import type { PasskeyClient, PasskeyClientConfig } from "./types.ts";
 
 type BeginResponse = { challengeId: string; options: unknown };
@@ -22,11 +22,11 @@ async function errorMessage(
 }
 
 async function registerPasskey(
-  base: string,
+  path: string,
   username: string,
 ): Promise<{ userId: string }> {
   const begin = await fetch(
-    `${base}/register?username=${encodeURIComponent(username)}`,
+    `${path}?username=${encodeURIComponent(username)}`,
   );
   if (!begin.ok) {
     throw new Error(await errorMessage(begin, "Could not start registration"));
@@ -35,7 +35,7 @@ async function registerPasskey(
   const credential = await startRegistration({
     optionsJSON: options as PublicKeyCredentialCreationOptionsJSON,
   });
-  const finish = await fetch(`${base}/register`, {
+  const finish = await fetch(path, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "same-origin",
@@ -48,15 +48,15 @@ async function registerPasskey(
 }
 
 async function loginPasskey<User>(
-  base: string,
+  path: string,
 ): Promise<{ user: User }> {
-  const begin = await fetch(`${base}/authenticate`);
+  const begin = await fetch(path);
   if (!begin.ok) throw new Error(await errorMessage(begin, "Login failed"));
   const { challengeId, options } = await begin.json() as BeginResponse;
   const credential = await startAuthentication({
     optionsJSON: options as PublicKeyCredentialRequestOptionsJSON,
   });
-  const finish = await fetch(`${base}/authenticate`, {
+  const finish = await fetch(path, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "same-origin",
@@ -67,9 +67,9 @@ async function loginPasskey<User>(
 }
 
 async function addPasskey(
-  base: string,
+  path: string,
 ): Promise<{ credentialId: string }> {
-  const begin = await fetch(`${base}/register-add-passkey`, {
+  const begin = await fetch(path, {
     credentials: "same-origin",
   });
   if (!begin.ok) throw new Error(await errorMessage(begin, "Could not start"));
@@ -77,7 +77,7 @@ async function addPasskey(
   const credential = await startRegistration({
     optionsJSON: options as PublicKeyCredentialCreationOptionsJSON,
   });
-  const finish = await fetch(`${base}/register-add-passkey`, {
+  const finish = await fetch(path, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "same-origin",
@@ -93,10 +93,10 @@ async function addPasskey(
 export function createPasskeyClient(
   config: PasskeyClientConfig = {},
 ): PasskeyClient {
-  const base = config.basePath ?? DEFAULT_BASE_PATH;
+  const paths = resolvePaths(config.basePath, config.paths);
   return {
-    register: (username) => registerPasskey(base, username),
-    login: <User = unknown>() => loginPasskey<User>(base),
-    addPasskey: () => addPasskey(base),
+    register: (username) => registerPasskey(paths.register, username),
+    login: <User = unknown>() => loginPasskey<User>(paths.authenticate),
+    addPasskey: () => addPasskey(paths.addPasskey),
   };
 }

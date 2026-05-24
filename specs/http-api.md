@@ -6,7 +6,8 @@ each endpoint and [Configuration](./configuration.md) for how the base path is
 set.
 
 All endpoints live under a configurable base path, which defaults to
-`/api/auth`. Paths below are written relative to that base. Each ceremony
+`/api/auth`. Each ceremony's segment can also be overridden individually; the
+paths below are the defaults, written relative to that base. Each ceremony
 exposes a pair: a GET that begins it and a POST that finishes it. Begin
 responses carry a challenge identifier and the options the browser needs; the
 matching finish request must echo that challenge identifier back.
@@ -41,7 +42,7 @@ signed credential.
 
 These endpoints require an active session throughout.
 
-### GET `/register-add-passkey`
+### GET `/add-passkey`
 
 Begins enrolling an additional credential for the signed-in user.
 
@@ -50,7 +51,7 @@ Begins enrolling an additional credential for the signed-in user.
 - **Unauthorized — 401.** No signed-in user.
 - **Server error — 500.** Unexpected failure while beginning.
 
-### POST `/register-add-passkey`
+### POST `/add-passkey`
 
 Finishes enrolling the additional credential. Takes the challenge identifier and
 the signed credential.

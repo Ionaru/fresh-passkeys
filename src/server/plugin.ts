@@ -9,7 +9,7 @@ import {
   verifyAddPasskey,
   verifyRegistration,
 } from "./ceremonies.ts";
-import { DEFAULT_BASE_PATH } from "../shared/constants.ts";
+import { resolvePaths } from "../shared/constants.ts";
 import type { PasskeyConfig } from "./types.ts";
 
 function json(data: unknown, status = 200, headers?: Headers): Response {
@@ -48,7 +48,7 @@ export function passkeyAuth<State>(
   config: PasskeyConfig<State>,
 ): App<State> {
   const define = createDefine<State>();
-  const base = config.basePath ?? DEFAULT_BASE_PATH;
+  const paths = resolvePaths(config.basePath, config.paths);
   const ceremonyOptions: CeremonyOptions = {
     rpId: config.rpId,
     rpName: config.rpName,
@@ -168,12 +168,12 @@ export function passkeyAuth<State>(
     }
   };
 
-  app.get(`${base}/register`, define.middleware(beginRegister));
-  app.post(`${base}/register`, define.middleware(finishRegister));
-  app.get(`${base}/register-add-passkey`, define.middleware(beginAdd));
-  app.post(`${base}/register-add-passkey`, define.middleware(finishAdd));
-  app.get(`${base}/authenticate`, define.middleware(beginAuth));
-  app.post(`${base}/authenticate`, define.middleware(finishAuth));
+  app.get(paths.register, define.middleware(beginRegister));
+  app.post(paths.register, define.middleware(finishRegister));
+  app.get(paths.addPasskey, define.middleware(beginAdd));
+  app.post(paths.addPasskey, define.middleware(finishAdd));
+  app.get(paths.authenticate, define.middleware(beginAuth));
+  app.post(paths.authenticate, define.middleware(finishAuth));
 
   return app;
 }

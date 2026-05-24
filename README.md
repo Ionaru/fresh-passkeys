@@ -53,14 +53,17 @@ only through these hooks. Storage (Drizzle, in-memory, Redis, …) is supplied v
 the `PasskeyStore` interface.
 
 Endpoints are mounted under `basePath` (default `/api/auth`): `register`,
-`register-add-passkey`, `authenticate` (each GET to begin, POST to finish).
+`add-passkey`, `authenticate` (each GET to begin, POST to finish). Each
+segment can be overridden individually via `paths`, e.g.
+`{ paths: { register: "/signup" } }`. Pass the same `paths` to the client so its
+requests match.
 
 ## Client
 
 ```ts
 import { createPasskeyClient } from "fresh-passkeys/client";
 
-const passkeys = createPasskeyClient(); // or { basePath: "/api/auth" }
+const passkeys = createPasskeyClient(); // or { basePath, paths } to customize URLs
 
 await passkeys.register(username); // new account + first passkey
 await passkeys.login(); // discoverable-credential login

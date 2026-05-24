@@ -7,11 +7,10 @@
 // island-safe entry rather than the server entry.
 export type { WebAuthnErrorCode } from "@simplewebauthn/browser";
 
-/** Client configuration; the base path is given once, not per call. */
-export interface PasskeyClientConfig {
-  /** Endpoint prefix; defaults to `DEFAULT_BASE_PATH` ("/api/auth"). */
-  basePath?: string;
-}
+import type { PasskeyEndpointConfig } from "../shared/constants.ts";
+
+/** Client configuration; endpoint location is given once, not per call. */
+export interface PasskeyClientConfig extends PasskeyEndpointConfig {}
 
 /**
  * Bound client. The shape of the authenticated user is whatever the host's
