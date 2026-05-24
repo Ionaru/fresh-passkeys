@@ -61,6 +61,7 @@ export function passkeyAuth<State>(
 
   const beginPublic: Middleware<State> = async (context) => {
     const username = context.url.searchParams.get("username") ?? "";
+    if (!username.trim()) return json({ error: "Username is required" }, 400);
     const validationError = config.validateUsername?.(username);
     if (validationError) return json({ error: validationError }, 400);
     try {

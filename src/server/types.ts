@@ -46,15 +46,17 @@ export interface PasskeyStore {
   takeChallenge(
     challengeId: string,
   ): Promise<ChallengeEntry | null> | ChallengeEntry | null;
-  findPasskey(credentialId: string): Promise<StoredPasskey | null>;
+  findPasskey(
+    credentialId: string,
+  ): Promise<StoredPasskey | null> | StoredPasskey | null;
   /** Used to build `excludeCredentials` for the add-passkey ceremony. */
-  listPasskeys(userId: string): Promise<StoredPasskey[]>;
-  savePasskey(passkey: StoredPasskey): Promise<void>;
-  bumpCounter(credentialId: string, counter: number): Promise<void>;
+  listPasskeys(userId: string): Promise<StoredPasskey[]> | StoredPasskey[];
+  savePasskey(passkey: StoredPasskey): Promise<void> | void;
+  bumpCounter(credentialId: string, counter: number): Promise<void> | void;
   /** Whether any credential exists at all (drives the login "no passkeys" case). */
-  hasAnyPasskeys(): Promise<boolean>;
+  hasAnyPasskeys(): Promise<boolean> | boolean;
   /** Display name for the add-passkey ceremony. */
-  getUsername(userId: string): Promise<string | null>;
+  getUsername(userId: string): Promise<string | null> | string | null;
 }
 
 /**

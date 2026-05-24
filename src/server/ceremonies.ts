@@ -141,8 +141,11 @@ export async function verifyAddPasskey(
   expectedUserId: string,
 ): Promise<{ credentialId: string }> {
   const entry = await ceremonyOptions.store.takeChallenge(challengeId);
-  if (!entry?.addPasskeyUserId || entry.addPasskeyUserId !== expectedUserId) {
+  if (!entry?.addPasskeyUserId) {
     throw new Error("Invalid challenge");
+  }
+  if (entry.addPasskeyUserId !== expectedUserId) {
+    throw new Error("Challenge does not belong to the signed-in user");
   }
 
   const verification = await verifyRegistrationResponse({
