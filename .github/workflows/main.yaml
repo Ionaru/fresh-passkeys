@@ -1,0 +1,78 @@
+name: CI/CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ["*"]
+  pull_request:
+    branches: [main]
+
+# Pinned action versions (commit SHAs to prevent supply chain attacks) and the
+# Deno version, defined once and referenced below.
+env:
+  CHECKOUT_ACTION: &checkout actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+  SETUP_DENO_ACTION: &setup-deno denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282 # v2.0.4
+  DENO_VERSION: v2.x
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: *checkout
+      - name: Setup Deno
+        uses: *setup-deno
+        with:
+          deno-version: ${{ env.DENO_VERSION }}
+      - name: Audit dependencies
+        run: deno audit
+
+  check:
+    needs: [audit]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: *checkout
+      - name: Setup Deno
+        uses: *setup-deno
+        with:
+          deno-version: ${{ env.DENO_VERSION }}
+      - name: Check formatting, lint and types
+        run: deno task check
+
+  test:
+    needs: [audit]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: *checkout
+      - name: Setup Deno
+        uses: *setup-deno
+        with:
+          deno-version: ${{ env.DENO_VERSION }}
+      - name: Test
+        run: deno task test
+
+  publish:
+    needs: [check, test]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: *checkout
+      - name: Setup Deno
+        uses: *setup-deno
+        with:
+          deno-version: ${{ env.DENO_VERSION }}
+      - name: Publish release to JSR
+        if: startsWith(github.ref, 'refs/tags/')
+        run: deno publish
+      - name: Publish @next prerelease to JSR
+        if: github.ref == 'refs/heads/main'
+        run: |
+          VERSION=$(deno eval "console.log(JSON.parse(Deno.readTextFileSync('deno.json')).version)")
+          deno publish --set-version "${VERSION}-next.${GITHUB_RUN_NUMBER}" --allow-dirty
