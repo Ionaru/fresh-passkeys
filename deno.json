@@ -1,6 +1,6 @@
 {
   "name": "@ionaru/fresh-passkeys",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "MIT",
   "exports": {
     "./server": "./src/server/mod.ts",
@@ -11,6 +11,17 @@
     "fix": "deno fmt . && deno lint --fix .",
     "test": "deno test -A --parallel --coverage --import-map=tests/import-map.json",
     "coverage": "deno coverage --exclude=tests/"
+  },
+  "publish": {
+    "exclude": [
+      "tests/",
+      "specs/",
+      ".github/",
+      "coverage/",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "deno.lock"
+    ]
   },
   "lint": {
     "rules": {

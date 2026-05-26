@@ -54,10 +54,3 @@ ceremony, storage, HTTP, or client behavior.
 - `tests/support/`: `memory_store.ts` (in-memory `PasskeyStore` with call
   tracking + TTL enforcement), `fixtures.ts` (credential/challenge data),
   `must.ts`.
-
-## Publishing
-
-- `deno.json` `name` is `"fresh-passkeys"` (unscoped). JSR requires
-  `@scope/name`: publish stays blocked until this is scoped. CI
-  (`.github/workflows/main.yaml`) publishes stable on git tags, `-next`
-  prereleases on main.
