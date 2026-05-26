@@ -2,10 +2,10 @@
 
 ## Purpose
 
-Passkey (WebAuthn) authentication for [Fresh](https://fresh.deno.dev) 2.x —
+Passkey (WebAuthn) authentication for [Fresh](https://fresh.deno.dev) 2.x:
 passwordless login backed by the device's biometrics or security key. Passkeys
 remove the password from the threat model entirely: nothing to phish, reuse, or
-leak in a breach. But the WebAuthn protocol behind them is unforgiving —
+leak in a breach. But the WebAuthn protocol behind them is unforgiving:
 challenge generation, signature verification, and signature-counter checks all
 have to be exactly right or the whole thing is insecure.
 
@@ -15,6 +15,43 @@ verification, and replay-protection counter updates for you. It stays out of
 everything that is yours to own: it ships no UI, and it reaches your application
 only through a storage port and a few config hooks, so you keep full control of
 your user model, sessions, and database.
+
+> 📖 **[Full documentation lives in `docs/`](./docs/README.md)**
+
+## Install
+
+```sh
+deno add jsr:@ionaru/fresh-passkeys
+```
+
+## Usage
+
+Mount the ceremonies on the server, then drive them from a browser island. Full
+walkthrough: [getting-started.md](./docs/getting-started.md).
+
+```ts
+// server: main.ts, after session middleware, before app.fsRoutes()
+import { passkeyAuth } from "@ionaru/fresh-passkeys/server";
+
+passkeyAuth(app, {
+  rpId: "example.com",
+  rpName: "Example",
+  store, // your PasskeyStore; see docs/storage-port.md
+  getSessionUserId: (state) => state.userId ?? null,
+  onRegistered: (verified, state) => {/* persist user+passkey+session */},
+  onAuthenticated: (userId, state) => {/* create session */},
+});
+```
+
+```ts
+// browser: an island
+import { createPasskeyClient } from "@ionaru/fresh-passkeys/client";
+
+const passkeys = createPasskeyClient();
+await passkeys.register(username); // new account + first passkey
+await passkeys.login(); // discoverable-credential login
+await passkeys.addPasskey(); // add a passkey to the signed-in user
+```
 
 ## Entry points
 

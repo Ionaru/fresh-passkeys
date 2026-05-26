@@ -1,7 +1,7 @@
 # Storage Port
 
-This document specifies the storage port — the set of capabilities the host
-implements so the plugin can persist and retrieve challenges and credentials —
+This document specifies the storage port (the set of capabilities the host
+implements so the plugin can persist and retrieve challenges and credentials)
 and the data shapes that cross the boundary between plugin and host. See also
 [Overview](./overview.md), [Ceremonies](./ceremonies.md), and
 [Configuration](./configuration.md).

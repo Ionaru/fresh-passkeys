@@ -1,6 +1,6 @@
 // Realistic WebAuthn credential shapes for verify-path tests. The faithful
 // server mock (tests/mocks/simplewebauthn_server.ts) rejects a credential
-// without an `id`, just as @simplewebauthn/server v13 does — so tests must feed
+// without an `id`, just as @simplewebauthn/server v13 does, so tests must feed
 // a real-shaped object rather than `{}`.
 
 export interface CredentialResponse {

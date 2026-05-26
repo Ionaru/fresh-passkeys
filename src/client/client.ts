@@ -1,5 +1,5 @@
 // Browser entry: thin wrappers over `@simplewebauthn/browser` that drive the
-// endpoints registered by `passkeyAuth`. Intentionally UI-free — the host app
+// endpoints registered by `passkeyAuth`. Intentionally UI-free, the host app
 // owns islands/markup/styling. Imports no server code, so it is island-safe.
 import {
   type PublicKeyCredentialCreationOptionsJSON,

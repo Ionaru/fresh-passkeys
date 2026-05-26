@@ -9,8 +9,8 @@ fresh-passkeys plugin. For behavioral detail see the related specifications:
 ## Purpose
 
 fresh-passkeys is a passwordless authentication plugin for the Fresh 2.x web
-framework. It lets a host application authenticate users with passkeys —
-credentials backed by device biometrics or a hardware security key — instead of
+framework. It lets a host application authenticate users with passkeys
+(credentials backed by device biometrics or a hardware security key) instead of
 passwords.
 
 Passkeys remove an entire class of risk. There is no shared secret to phish, no
@@ -23,8 +23,8 @@ exactly correct, or the resulting system is silently insecure.
 The plugin exists to own those exacting parts so the host does not reimplement
 cryptography. It performs the WebAuthn ceremonies, manages challenge lifetimes,
 verifies credentials, and maintains replay-protection counters. Everything that
-is specific to the host application — the user model, sessions, database, and
-user interface — stays under the host's control.
+is specific to the host application (the user model, sessions, database, and
+user interface) stays under the host's control.
 
 ## Design principles
 
@@ -53,7 +53,7 @@ at registration time. Two mechanisms carry this:
   implements them. See [Storage Port](./storage-port.md).
 - **The hooks.** Functions the host provides so the plugin can read the current
   session's user and hand control back to the host at the two moments that touch
-  identity — when a registration is verified and when a login is verified. See
+  identity: when a registration is verified and when a login is verified. See
   [Configuration](./configuration.md).
 
 Because the plugin depends only on these host-supplied capabilities and never
@@ -78,11 +78,11 @@ relays the browser's WebAuthn interaction to and from the server.
 
 ## Document map
 
-- [Ceremonies](./ceremonies.md) — the three authentication ceremonies, the
+- [Ceremonies](./ceremonies.md): the three authentication ceremonies, the
   challenge lifecycle, and replay protection.
-- [Storage Port](./storage-port.md) — the capabilities the host must implement
+- [Storage Port](./storage-port.md): the capabilities the host must implement
   and the data shapes that cross the boundary.
-- [Configuration](./configuration.md) — required and optional configuration and
+- [Configuration](./configuration.md): required and optional configuration and
   the host hooks.
-- [HTTP API](./http-api.md) — the endpoint and status-code contract.
-- [Client](./client.md) — the browser helper contract.
+- [HTTP API](./http-api.md): the endpoint and status-code contract.
+- [Client](./client.md): the browser helper contract.

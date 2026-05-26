@@ -7,7 +7,7 @@ hands control back to the host. See also [Overview](./overview.md),
 
 The host mounts the plugin by registering it against its Fresh application and
 passing a single configuration object. Registration must happen **after** the
-middleware that populates session state — so the session hooks can read it — and
+middleware that populates session state (so the session hooks can read it) and
 **before** the application's file-based routes are added, so the ceremony
 endpoints take priority.
 
@@ -44,7 +44,7 @@ Called after a registration is verified, receiving the verified registration
 result and the session state. The host owns everything that happens next: it
 creates the user account, persists the first credential, establishes a session,
 and returns the HTTP response that the plugin sends back to the browser. Until
-this hook runs, no account exists — registration is not complete until the host
+this hook runs, no account exists: registration is not complete until the host
 commits it here.
 
 The response body this hook returns must carry the new user's identifier under a
@@ -73,7 +73,7 @@ paths.
 
 ### Endpoint path overrides
 
-The segment for each ceremony — registration, add-passkey, and authentication —
+The segment for each ceremony (registration, add-passkey, and authentication)
 may be overridden individually. Any segment left unspecified keeps its default.
 Each override is appended to the base path, so they compose: changing both the
 base path and a single segment is allowed. The same overrides must be given to
@@ -98,5 +98,5 @@ both phases of registration.
 The hooks are the only points where the plugin touches identity, and at each one
 control passes fully to the host. The host decides what a user record looks
 like, when an account truly exists, and how sessions are represented and issued.
-The plugin commits nothing about identity on its own — it verifies the
+The plugin commits nothing about identity on its own: it verifies the
 cryptography and then asks the host to take over.

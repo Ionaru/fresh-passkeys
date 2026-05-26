@@ -19,10 +19,10 @@ matching finish request must echo that challenge identifier back.
 Begins account creation. Takes the desired username as a query input. The
 username is required and, if a validator is configured, must pass it.
 
-- **Success — 200.** Returns the challenge identifier and the registration
+- **Success: 200.** Returns the challenge identifier and the registration
   options.
-- **Bad request — 400.** Username missing or rejected by the validator.
-- **Server error — 500.** Unexpected failure while beginning.
+- **Bad request: 400.** Username missing or rejected by the validator.
+- **Server error: 500.** Unexpected failure while beginning.
 
 ### POST `/register`
 
@@ -32,10 +32,10 @@ signed credential.
 - **Success.** The status and body are produced by the host's registered hook,
   which creates the account and session. See
   [Configuration](./configuration.md).
-- **Bad request — 400.** Malformed request body, a missing field, a username
+- **Bad request: 400.** Malformed request body, a missing field, a username
   rejected by the validator, a username that does not match the one from the
   begin phase, or a challenge that is missing, expired, or malformed.
-- **Unauthorized — 401.** Any other verification failure (for example an invalid
+- **Unauthorized: 401.** Any other verification failure (for example an invalid
   signature or an origin mismatch).
 
 ## Add passkey
@@ -46,21 +46,21 @@ These endpoints require an active session throughout.
 
 Begins enrolling an additional credential for the signed-in user.
 
-- **Success — 200.** Returns the challenge identifier and the registration
+- **Success: 200.** Returns the challenge identifier and the registration
   options.
-- **Unauthorized — 401.** No signed-in user.
-- **Server error — 500.** Unexpected failure while beginning.
+- **Unauthorized: 401.** No signed-in user.
+- **Server error: 500.** Unexpected failure while beginning.
 
 ### POST `/add-passkey`
 
 Finishes enrolling the additional credential. Takes the challenge identifier and
 the signed credential.
 
-- **Success — 201.** Confirms the enrollment and returns the new credential
+- **Success: 201.** Confirms the enrollment and returns the new credential
   identifier.
-- **Bad request — 400.** A missing field, or a challenge that is missing,
+- **Bad request: 400.** A missing field, or a challenge that is missing,
   expired, or malformed.
-- **Unauthorized — 401.** No signed-in user, a challenge not bound to the
+- **Unauthorized: 401.** No signed-in user, a challenge not bound to the
   signed-in user, or any other verification failure.
 
 ## Authentication
@@ -69,11 +69,11 @@ the signed credential.
 
 Begins a login. Takes no inputs.
 
-- **Success — 200.** Returns the challenge identifier and the authentication
+- **Success: 200.** Returns the challenge identifier and the authentication
   options.
-- **Not found — 404.** No passkeys are registered anywhere, so there is nothing
+- **Not found: 404.** No passkeys are registered anywhere, so there is nothing
   to authenticate against.
-- **Server error — 500.** Any other unexpected failure while beginning.
+- **Server error: 500.** Any other unexpected failure while beginning.
 
 ### POST `/authenticate`
 
@@ -81,10 +81,10 @@ Finishes the login. Takes the challenge identifier and the signed credential.
 
 - **Success.** The status and body are produced by the host's authenticated
   hook, which establishes the session. See [Configuration](./configuration.md).
-- **Bad request — 400.** A missing field, or a challenge that is missing,
+- **Bad request: 400.** A missing field, or a challenge that is missing,
   expired, or malformed.
-- **Not found — 404.** The presented credential matches no stored credential.
-- **Unauthorized — 401.** Any other verification failure, including a signature
+- **Not found: 404.** The presented credential matches no stored credential.
+- **Unauthorized: 401.** Any other verification failure, including a signature
   counter that fails to advance.
 
 ## Status-code summary

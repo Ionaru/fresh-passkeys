@@ -20,7 +20,7 @@ There are three ceremonies: **registration**, **add passkey**, and
 ## Registration
 
 This ceremony creates a brand-new account together with its first passkey. It is
-open — it does not require an existing session.
+open: it does not require an existing session.
 
 ### Begin
 
@@ -40,9 +40,8 @@ open — it does not require an existing session.
    - user verification is preferred;
    - the exclude list is empty, because this is a new account with no prior
      credentials.
-4. A challenge identifier is generated. The challenge — together with its
-   expiry, the provisional user identifier, and the validated username — is
-   persisted.
+4. A challenge identifier is generated. The challenge (together with its expiry,
+   the provisional user identifier, and the validated username) is persisted.
 5. The challenge identifier and the options are returned to the browser.
 
 ### Finish
@@ -57,9 +56,9 @@ open — it does not require an existing session.
    username, the ceremony fails as an invalid challenge.
 4. The credential is verified against the stored challenge, the expected origin,
    and the relying-party identifier.
-5. On success the verified credential — the provisional user identifier, the
+5. On success the verified credential (the provisional user identifier, the
    username, the credential identifier, the public key, the starting counter,
-   and the transports — is handed to the host's registration hook. The host
+   and the transports) is handed to the host's registration hook. The host
    creates the account, persists the credential, establishes a session, and
    returns the HTTP response. The plugin itself does not create users or
    sessions.
@@ -135,10 +134,9 @@ user need not type a username.
   read-and-delete operation. A challenge can therefore be consumed exactly once;
   a replayed finish request finds nothing and fails.
 - **Expiry.** Each challenge is stored with an expiry five minutes after
-  creation. The plugin records this expiry; enforcing it — refusing or
-  discarding a challenge whose expiry has passed — is part of the storage port's
-  contract, not re-checked inside the ceremony. See
-  [Storage Port](./storage-port.md).
+  creation. The plugin records this expiry; enforcing it (refusing or discarding
+  a challenge whose expiry has passed) is part of the storage port's contract,
+  not re-checked inside the ceremony. See [Storage Port](./storage-port.md).
 - **Ceremony discrimination.** A stored challenge carries different identity
   fields depending on which ceremony created it: a provisional user identifier
   and username for registration, an authenticated user identifier for add

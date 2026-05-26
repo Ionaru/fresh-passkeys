@@ -12,7 +12,7 @@
 //
 // Tests import this file by relative path to configure `serverMock`; the
 // ceremony code imports `@simplewebauthn/server`, which the import map resolves
-// to this same file URL — so both share one module instance.
+// to this same file URL, so both share one module instance.
 
 export type AuthenticatorTransportFuture =
   | "usb"

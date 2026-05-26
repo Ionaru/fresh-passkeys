@@ -38,8 +38,8 @@ identifier of the newly created user.
 Begins authentication, prompts the browser to select and use a discoverable
 passkey, and finishes by submitting the assertion. On success it yields the
 signed-in user. The shape of that user is whatever the host's authenticated hook
-returns — the client treats it generically and the plugin never dictates the
-user model.
+returns: the client treats it generically and the plugin never dictates the user
+model.
 
 ### Add a passkey
 
@@ -54,6 +54,6 @@ When an endpoint responds with a failure, the client raises an error carrying
 the server's message when one is present and otherwise a fallback that includes
 the HTTP status, so the host can react to begin- and finish-phase failures
 uniformly. The plugin also re-exports the underlying library's typed WebAuthn
-error so the host can distinguish and handle authenticator-level failures — such
-as a user dismissing the prompt — without taking a direct dependency on that
+error so the host can distinguish and handle authenticator-level failures (such
+as a user dismissing the prompt) without taking a direct dependency on that
 library.

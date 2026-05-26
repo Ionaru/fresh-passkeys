@@ -515,7 +515,7 @@ Deno.test("finishAuthentication checks only the presented credential's counter",
   const { store, options } = setup();
   serverMock.newCounter = 5;
   // Two credentials with independent counters. The new assertion reports 5,
-  // which advances "b" (stored 1) but would regress "a" (stored 10) — proving
+  // which advances "b" (stored 1) but would regress "a" (stored 10), proving
   // each credential is checked against its own counter, never another's.
   store.createPasskey({
     userId: "owner-a",
@@ -550,7 +550,7 @@ Deno.test("finishAuthentication checks only the presented credential's counter",
 
 Deno.test("finishAuthentication rejects a counter that fails to advance (replay)", async () => {
   const { store, options } = setup();
-  // Stored counter 5; the new assertion reports 3 — a non-advancing counter
+  // Stored counter 5; the new assertion reports 3, a non-advancing counter
   // signals a cloned authenticator and must be rejected.
   serverMock.newCounter = 3;
   store.createPasskey({

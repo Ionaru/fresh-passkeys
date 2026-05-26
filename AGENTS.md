@@ -17,14 +17,14 @@ ceremony, storage, HTTP, or client behavior.
 
 ## Commands
 
-- `deno task check` — `deno fmt --check . && deno lint . && deno check`. Run
+- `deno task check`: `deno fmt --check . && deno lint . && deno check`. Run
   before considering work done.
-- `deno task fix` — auto-format and lint-fix.
-- `deno task test` — runs with a custom import-map that mocks
+- `deno task fix`: auto-format and lint-fix.
+- `deno task test`: runs with a custom import-map that mocks
   `@simplewebauthn/*`. Tests fail without it.
 - Single test file:
   `deno test -A --import-map=tests/import-map.json tests/ceremonies_test.ts`
-- `deno task coverage` — coverage report excluding `tests/`.
+- `deno task coverage`: coverage report excluding `tests/`.
 
 ## Code style
 
@@ -36,7 +36,7 @@ ceremony, storage, HTTP, or client behavior.
 ## Architecture
 
 - Two separate JSR exports: `./server` (`src/server/mod.ts`) and `./client`
-  (`src/client/mod.ts`). Keep server code out of the client export — it ships to
+  (`src/client/mod.ts`). Keep server code out of the client export: it ships to
   the browser bundle.
 - Dependency-inverted: the plugin owns ceremony crypto but persists nothing
   itself. The host implements the `PasskeyStore` port and a `getSessionUserId()`
@@ -58,6 +58,6 @@ ceremony, storage, HTTP, or client behavior.
 ## Publishing
 
 - `deno.json` `name` is `"fresh-passkeys"` (unscoped). JSR requires
-  `@scope/name` — publish stays blocked until this is scoped. CI
+  `@scope/name`: publish stays blocked until this is scoped. CI
   (`.github/workflows/main.yaml`) publishes stable on git tags, `-next`
   prereleases on main.
