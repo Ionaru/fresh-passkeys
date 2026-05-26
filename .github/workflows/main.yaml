@@ -74,5 +74,12 @@ jobs:
       - name: Publish @next prerelease to JSR
         if: github.ref == 'refs/heads/main'
         run: |
+          # Read the base version, then strip the version field from the
+          # working-copy deno.json. JSR re-reads the packaged config and rejects
+          # a publish whose version differs from --set-version; with no version
+          # field there is nothing to mismatch, so --set-version is
+          # authoritative. The edit is discarded with the runner (never
+          # committed); --allow-dirty permits publishing it.
           VERSION=$(deno eval "console.log(JSON.parse(Deno.readTextFileSync('deno.json')).version)")
+          deno eval "const path='deno.json'; const config=JSON.parse(Deno.readTextFileSync(path)); delete config.version; Deno.writeTextFileSync(path, JSON.stringify(config, null, 2) + '\n');"
           deno publish --set-version "${VERSION}-next.${GITHUB_RUN_NUMBER}" --allow-dirty
