@@ -17,11 +17,6 @@ import { passkeyAuth } from "@ionaru/fresh-passkeys/server";
 import { createPasskeyClient } from "@ionaru/fresh-passkeys/client";
 ```
 
-> **Known issue:** the package is currently being published under a name that
-> JSR may still reject as unscoped: if `deno add` fails, check the latest
-> published version on JSR and adjust the import specifier to match. Everything
-> below is unaffected once the import resolves.
-
 ## 2. Prerequisites
 
 WebAuthn only runs in a **secure context**:
